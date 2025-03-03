@@ -53,6 +53,8 @@ A SQLite-based todo plugin for Oh-My-Zsh, providing persistent storage and effic
 
 ## Configuration
 
+### Option 1: Using the configuration file (default)
+
 The plugin will automatically create a configuration file at `~/.ztodo.conf` if it doesn't exist. You can customize the following settings:
 
 ```bash
@@ -71,12 +73,36 @@ ZTODO_UPCOMING_DAYS=7  # Number of days to look ahead for deadlines
 ZTODO_COLOR_ENABLED="true"  # Enable colored output
 ```
 
-You can override these paths in your `~/.zshrc` before Oh-My-Zsh loads the plugin:
+See [Configuration File](ztodo.conf.template) for an example.
+
+### Option 2: Using .zshrc directly
+
+If you prefer to manage all configuration in your `.zshrc` file, you can disable the configuration file:
 
 ```bash
-# Override paths before loading oh-my-zsh
-ZTODO_DB_PATH="$HOME/custom/path/to/db"
-ZTODO_CONFIG_PATH="$HOME/custom/path/to/config"
+# Disable the configuration file
+ZTODO_USE_CONFIG_FILE="false"
+
+# Then set your configuration options
+ZTODO_DB_PATH="$HOME/my-tasks.db"
+ZTODO_DEFAULT_CATEGORY="work"
+ZTODO_DEFAULT_PRIORITY=1
+ZTODO_SHOW_UPCOMING_DEADLINES="true"
+ZTODO_UPCOMING_DAYS=5
+ZTODO_COLOR_ENABLED="true"
+
+# These must be set before Oh-My-Zsh loads the plugin
+plugins=(... ztodo)
+source $ZSH/oh-my-zsh.sh
+```
+
+### Overriding the configuration file location
+
+You can also change the location of the configuration file:
+
+```bash
+# Set custom config path before loading oh-my-zsh
+ZTODO_CONFIG_PATH="$HOME/Documents/ztodo-config.conf"
 
 # Then load oh-my-zsh
 source $ZSH/oh-my-zsh.sh

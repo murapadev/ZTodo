@@ -7,9 +7,15 @@
 # Default configuration
 ZTODO_DB_PATH="${ZTODO_DB_PATH:-$HOME/.ztodo.db}"
 ZTODO_CONFIG_PATH="${ZTODO_CONFIG_PATH:-$HOME/.ztodo.conf}"
+# Allow users to disable config file and use .zshrc values directly
+ZTODO_USE_CONFIG_FILE="${ZTODO_USE_CONFIG_FILE:-true}"
 
-# Initialize config file if it doesn't exist
+# Initialize config file if it doesn't exist and if config file usage is enabled
 _ztodo_init_config() {
+  if [[ "${ZTODO_USE_CONFIG_FILE}" != "true" ]]; then
+    return 0
+  fi
+
   if [[ ! -f "$ZTODO_CONFIG_PATH" ]]; then
     local template_path="${0:A:h}/ztodo.conf.template"
     if [[ -f "$template_path" ]]; then
@@ -31,9 +37,11 @@ EOF
   fi
 }
 
-# Import configuration if exists, otherwise initialize it
+# Import configuration if exists and if config file usage is enabled
 _ztodo_init_config
-[[ -f "$ZTODO_CONFIG_PATH" ]] && source "$ZTODO_CONFIG_PATH"
+if [[ "${ZTODO_USE_CONFIG_FILE}" == "true" && -f "$ZTODO_CONFIG_PATH" ]]; then
+  source "$ZTODO_CONFIG_PATH"
+fi
 
 # Colors - only apply if enabled in config
 if [[ "${ZTODO_COLOR_ENABLED:-true}" == "true" ]]; then
@@ -389,6 +397,11 @@ _ztodo_show_upcoming_deadlines() {
 
 # Show help
 ztodo_help() {
+  local config_status="enabled"
+  if [[ "${ZTODO_USE_CONFIG_FILE}" != "true" ]]; then
+    config_status="disabled (using .zshrc values)"
+  fi
+  
   cat <<EOF
 ${BLUE}ZTodo - SQLite-based Todo Plugin for Oh-My-Zsh${NC}
 
@@ -406,9 +419,9 @@ ${YELLOW}Commands:${NC}
 
 ${YELLOW}Configuration:${NC}
   Database: $ZTODO_DB_PATH
-  Config:   $ZTODO_CONFIG_PATH
+  Config:   $ZTODO_CONFIG_PATH (${config_status})
   
-  You can customize ZTodo by editing $ZTODO_CONFIG_PATH
+  You can customize ZTodo by editing $ZTODO_CONFIG_PATH or setting variables in .zshrc
 EOF
 }
 
