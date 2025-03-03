@@ -73,6 +73,40 @@ ZTODO_CONFIG_PATH="$HOME/.ztodo.conf"
 - Efficient search capabilities
 - Automatic cleanup of expired tasks
 
+## Roadmap
+
+These are features we're planning to implement in the future:
+
+### Third-party Integrations
+
+- **ClickUp Integration**: Sync tasks with your ClickUp workspaces, push local tasks to ClickUp, and pull assigned tasks to your local environment.
+- **Notion Integration**: Seamlessly sync with Notion databases, enabling bidirectional updates between ZTodo and your Notion workspace.
+- **GitHub Issues**: Convert GitHub issues to local tasks and vice versa, ideal for developers managing project tasks.
+- **Jira Integration**: For enterprise users, sync with Jira tickets and track work across platforms.
+
+### Enhanced Features
+
+- **Recurring Tasks**: Set up tasks that repeat on daily, weekly, monthly, or custom schedules.
+- **Time Tracking**: Track how long you spend on each task.
+- **Subtasks Support**: Break down complex tasks into manageable subtasks.
+- **Calendar View**: Visual representation of your deadlines in calendar format.
+- **Data Export/Import**: Export your tasks as CSV/JSON and import from various formats.
+- **Task Templates**: Create templates for common task types with predefined attributes.
+- **Team Sharing**: Share tasks with team members (requires server component).
+- **Per Task History**: Configure your ZSH history to log task-related commands.
+
+
+### UI Improvements
+
+- **Interactive TUI**: A full terminal user interface for easier task management.
+- **Custom Theming**: Define your own color schemes and styling.
+- **Dashboard View**: Overview of task statistics and upcoming deadlines.
+- **Notifications**: Desktop notifications for upcoming deadlines and reminders.
+- **Mobile App**: Companion app for managing tasks on the go.
+- **Web Interface**: A web-based dashboard for managing tasks from any device.
+
+If you'd like to contribute to any of these features, please check out our [Contributing Guide](CONTRIBUTING.md).
+
 ## License
 
 Apache License 2.0
