@@ -128,6 +128,9 @@ These are features we're planning to implement in the future:
 - **Notion Integration**: Seamlessly sync with Notion databases, enabling bidirectional updates between ZTodo and your Notion workspace.
 - **GitHub Issues**: Convert GitHub issues to local tasks and vice versa, ideal for developers managing project tasks.
 - **Jira Integration**: For enterprise users, sync with Jira tickets and track work across platforms.
+- **Google Calendar**: Sync tasks with Google Calendar for deadline management.
+- **Slack Integration**: Receive task reminders and updates directly in your Slack channels.
+- **More database options**: Support for PostgreSQL, MySQL, and MongoDB.
 
 ### Enhanced Features
 
