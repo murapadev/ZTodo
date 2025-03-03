@@ -1,0 +1,16 @@
+# ZTodo Configuration File
+# Copy this file to ~/.ztodo.conf and modify as needed
+
+# Database location
+ZTODO_DB_PATH="$HOME/.ztodo.db"
+
+# Default task settings
+ZTODO_DEFAULT_CATEGORY="general"
+ZTODO_DEFAULT_PRIORITY=2  # 1=high, 2=medium, 3=low
+
+# Notification settings
+ZTODO_SHOW_UPCOMING_DEADLINES="true"  # Show upcoming deadlines when opening a terminal
+ZTODO_UPCOMING_DAYS=7  # Number of days to look ahead for deadlines
+
+# Display settings
+ZTODO_COLOR_ENABLED="true"  # Enable colored output

@@ -53,14 +53,33 @@ A SQLite-based todo plugin for Oh-My-Zsh, providing persistent storage and effic
 
 ## Configuration
 
-The plugin uses these default paths which can be overridden in your `~/.zshrc`:
+The plugin will automatically create a configuration file at `~/.ztodo.conf` if it doesn't exist. You can customize the following settings:
 
 ```bash
 # Database location
 ZTODO_DB_PATH="$HOME/.ztodo.db"
 
-# Config file location (for future use)
-ZTODO_CONFIG_PATH="$HOME/.ztodo.conf"
+# Default task settings
+ZTODO_DEFAULT_CATEGORY="general"
+ZTODO_DEFAULT_PRIORITY=2  # 1=high, 2=medium, 3=low
+
+# Notification settings
+ZTODO_SHOW_UPCOMING_DEADLINES="true"  # Show upcoming deadlines when opening a terminal
+ZTODO_UPCOMING_DAYS=7  # Number of days to look ahead for deadlines
+
+# Display settings
+ZTODO_COLOR_ENABLED="true"  # Enable colored output
+```
+
+You can override these paths in your `~/.zshrc` before Oh-My-Zsh loads the plugin:
+
+```bash
+# Override paths before loading oh-my-zsh
+ZTODO_DB_PATH="$HOME/custom/path/to/db"
+ZTODO_CONFIG_PATH="$HOME/custom/path/to/config"
+
+# Then load oh-my-zsh
+source $ZSH/oh-my-zsh.sh
 ```
 
 ## Features

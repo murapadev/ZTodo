@@ -8,16 +8,49 @@
 ZTODO_DB_PATH="${ZTODO_DB_PATH:-$HOME/.ztodo.db}"
 ZTODO_CONFIG_PATH="${ZTODO_CONFIG_PATH:-$HOME/.ztodo.conf}"
 
-# Import configuration if exists
+# Initialize config file if it doesn't exist
+_ztodo_init_config() {
+  if [[ ! -f "$ZTODO_CONFIG_PATH" ]]; then
+    local template_path="${0:A:h}/ztodo.conf.template"
+    if [[ -f "$template_path" ]]; then
+      echo "Creating default ZTodo configuration at $ZTODO_CONFIG_PATH"
+      cp "$template_path" "$ZTODO_CONFIG_PATH"
+    else
+      echo "${YELLOW}Warning: Could not find configuration template at $template_path${NC}"
+      # Create minimal config
+      cat > "$ZTODO_CONFIG_PATH" <<EOF
+# ZTodo Configuration File
+ZTODO_DB_PATH="$HOME/.ztodo.db"
+ZTODO_DEFAULT_CATEGORY="general"
+ZTODO_DEFAULT_PRIORITY=2
+ZTODO_SHOW_UPCOMING_DEADLINES="true"
+ZTODO_UPCOMING_DAYS=7
+ZTODO_COLOR_ENABLED="true"
+EOF
+    fi
+  fi
+}
+
+# Import configuration if exists, otherwise initialize it
+_ztodo_init_config
 [[ -f "$ZTODO_CONFIG_PATH" ]] && source "$ZTODO_CONFIG_PATH"
 
-# Colors
-RED='\033[0;31m'
-YELLOW='\033[0;33m'
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-NC='\033[0m' # No Color
+# Colors - only apply if enabled in config
+if [[ "${ZTODO_COLOR_ENABLED:-true}" == "true" ]]; then
+  RED='\033[0;31m'
+  YELLOW='\033[0;33m'
+  GREEN='\033[0;32m'
+  BLUE='\033[0;34m'
+  PURPLE='\033[0;35m'
+  NC='\033[0m' # No Color
+else
+  RED=''
+  YELLOW=''
+  GREEN=''
+  BLUE=''
+  PURPLE=''
+  NC=''
+fi
 
 # Initialize database if not exists
 _ztodo_init_db() {
@@ -86,11 +119,11 @@ ztodo_add() {
   
   read -r "description?Description (optional): "
   
-  read -r "category?Category (default: general): "
-  category="${category:-general}"
+  read -r "category?Category (default: ${ZTODO_DEFAULT_CATEGORY:-general}): "
+  category="${category:-${ZTODO_DEFAULT_CATEGORY:-general}}"
   
-  read -r "priority?Priority (1-High, 2-Medium, 3-Low, default: 2): "
-  priority="${priority:-2}"
+  read -r "priority?Priority (1-High, 2-Medium, 3-Low, default: ${ZTODO_DEFAULT_PRIORITY:-2}): "
+  priority="${priority:-${ZTODO_DEFAULT_PRIORITY:-2}}"
   [[ "$priority" =~ ^[1-3]$ ]] || { echo "${RED}Error: Priority must be 1, 2, or 3${NC}"; return 1; }
   
   read -r "deadline?Deadline (YYYY-MM-DD, optional): "
@@ -374,6 +407,8 @@ ${YELLOW}Commands:${NC}
 ${YELLOW}Configuration:${NC}
   Database: $ZTODO_DB_PATH
   Config:   $ZTODO_CONFIG_PATH
+  
+  You can customize ZTodo by editing $ZTODO_CONFIG_PATH
 EOF
 }
 
