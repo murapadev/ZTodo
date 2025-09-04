@@ -11,6 +11,18 @@ ZTODO_DEFAULT_PRIORITY=2  # 1=high, 2=medium, 3=low
 # Notification settings
 ZTODO_SHOW_UPCOMING_DEADLINES="true"  # Show upcoming deadlines when opening a terminal
 ZTODO_UPCOMING_DAYS=7  # Number of days to look ahead for deadlines
+ZTODO_ONLOAD_MESSAGE="true"  # Show a brief message when the plugin loads
+
+# Per-task shell history logging (opt-in)
+ZTODO_HISTORY_ENABLED="false"           # Log commands to the focused task
+ZTODO_HISTORY_CAPTURE_PWD="true"        # Include working directory in logs
+ZTODO_HISTORY_IGNORE="pass,token,secret"  # Comma-separated substrings to ignore
+ZTODO_HISTORY_REDACT="true"              # Mask secrets in logged commands
+ZTODO_HISTORY_REDACT_PATTERNS="password,passwd,token,secret,api_key,api-key,authorization,bearer"
+
+# Focus persistence (opt-in)
+ZTODO_FOCUS_PERSIST="false"              # Persist focused task across terminals
+ZTODO_FOCUS_FILE="$HOME/.ztodo_focus"     # File to store focus id
 
 # Display settings
 ZTODO_COLOR_ENABLED="true"  # Enable colored output
